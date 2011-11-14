@@ -64,10 +64,19 @@
             //code here if decimal point already exists and another one is attempted
         }
     } else if ([operation isEqual:@"M"]) {
-        valueStoredInMemory = waitingOperand;
+        if (operand){
+            valueStoredInMemory = operand;
+        } else {
+            valueStoredInMemory = waitingOperand;
+        }
         NSLog(@"The value in memory is: %f", valueStoredInMemory);
     } else if ([operation isEqual:@"M+"]) {
-        valueStoredInMemory += waitingOperand;
+        if (operand){
+            valueStoredInMemory += operand;
+        } else {
+            valueStoredInMemory += waitingOperand;
+        }
+        NSLog(@"The value in memory is: %f", valueStoredInMemory);
     } else if ([operation isEqual:@"RM"]) {
         operand = valueStoredInMemory;
     } else {
