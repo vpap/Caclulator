@@ -11,6 +11,7 @@
 @implementation CalculatorBrain
 
 @synthesize valueStoredInMemory;
+@synthesize decimalOperand;
 
 -(void)setOperand:(double)anOperand {
     operand = anOperand;
@@ -30,6 +31,7 @@
     }
 }
 
+
 -(double)performOperation:(NSString *)operation {
     if ([operation isEqual:@"sqrt"]) {
         operand = sqrt(operand);
@@ -48,21 +50,6 @@
         waitingOperand = 0;
         waitingOperation = nil;
         valueStoredInMemory = 0;
-        // add code to clear the memory
-        
-    } else if ([operation isEqual:@"."]) {
-        NSString *integerPart = [NSString stringWithFormat:@"%g", operand];
-        NSRange range = [integerPart rangeOfString:@"."];
-        if (range.location == NSNotFound) {
-            if (!waitingOperand){
-                waitingOperand = 0;
-            }
-            //code here to start typing numbers after decimal point
-            
-            
-        } else {
-            //code here if decimal point already exists and another one is attempted
-        }
     } else if ([operation isEqual:@"M"]) {
         if (operand){
             valueStoredInMemory = operand;
