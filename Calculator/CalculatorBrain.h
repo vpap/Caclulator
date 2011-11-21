@@ -12,6 +12,7 @@
 
 {
     double operand;
+    NSString *operationStatus;
     float decimalOperand;
     double valueStoredInMemory;
     NSString *waitingOperation;
@@ -20,7 +21,7 @@
 }
 
 @property (readwrite) double valueStoredInMemory;
-@property (readwrite) float decimalOperand;
+@property (readwrite) float decimalOperand; 
 
 -(void)performWaitingOperation;
 -(void)setOperand:(double)anOperand;

@@ -25,22 +25,31 @@
     } else if ([@"*" isEqual:waitingOperation]) {
         operand = waitingOperand * operand;
     } else if ([@"/" isEqual:waitingOperation]) {
-        if (operand) {
+        if (operand!=0) {
             operand = waitingOperand / operand;
+        } else {
+            //Write error message
+//            [memoryOnDisplay setText:@"M"];
         }
-    }
+    } 
 }
-
 
 -(double)performOperation:(NSString *)operation {
     if ([operation isEqual:@"sqrt"]) {
-        operand = sqrt(operand);
+        if (operand >= 0) {
+            operand = sqrt(operand);            
+        } else {
+            //Print error message
+        }
+
     } else if ([operation isEqual:@"1/x"]){
-        operand = 1 / (operand);
+        if (operand != 0){
+            operand = 1 / (operand);
+        } else {
+            //Print error message
+        }
     } else if ([operation isEqual:@"sin()"]) {
         operand = sin(operand);
-    } else if ([operation isEqual:@"cos()"]) {
-        operand = cos(operand);
     } else if ([operation isEqual:@"cos()"]) {
         operand = cos(operand);
     } else if ([operation isEqual:@"+/-"]) {
@@ -66,13 +75,15 @@
         NSLog(@"The value in memory is: %f", valueStoredInMemory);
     } else if ([operation isEqual:@"RM"]) {
         operand = valueStoredInMemory;
+    } else if ([operation isEqual:@"CM"]){
+        valueStoredInMemory = 0;
     } else {
         [self performWaitingOperation];
         waitingOperation = operation;
         waitingOperand = operand;
     }
+    
     return operand;
 }
-
 
 @end

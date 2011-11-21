@@ -15,6 +15,7 @@
     CalculatorBrain *brain;
     IBOutlet UILabel *display;
     IBOutlet UILabel *memoryOnDisplay;
+    IBOutlet UILabel *errorMessageDisplay;
     BOOL userIsInTheMiddleOfTypingANumber;
     BOOL decimalPointAlreadyPressed;
     BOOL decimalPointPressed;
