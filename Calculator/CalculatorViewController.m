@@ -11,15 +11,21 @@
 
 @implementation CalculatorViewController
 
+@synthesize errorMessageDisplay; 
+@synthesize brainError;
+
 -(CalculatorBrain *) brain{
     if (!brain) {
         brain = [[CalculatorBrain alloc] init];
+        
+        //Way to tranafer the error from brain to CVController
+        //self.brainError = self.brain.errorMessage;
     }
     return brain;
 }
 
 -(IBAction)digitPressed:(UIButton *)sender{
-
+    errorMessageDisplay.text = @"";
     NSString *digit = [[sender titleLabel] text];
     
     if ([digit isEqual:@"π"]){
@@ -33,12 +39,10 @@
     
     if (userIsInTheMiddleOfTypingANumber) {        
         if (decimalPointAlreadyPressed && decimalPointPressed){
-            [errorMessageDisplay setText:@"2nd decimal"];;
-            
+            errorMessageDisplay.text = self.brain.errorMessage;
         } else {
             [display setText:[[display text] stringByAppendingString:digit]];
         }
-
 
     } else {
         [display setText:digit];
@@ -46,8 +50,8 @@
     }
 }
 
--(void)operationPressed:(UIButton *)sender{
-
+-(IBAction)operationPressed:(UIButton *)sender{
+    errorMessageDisplay.text = @"";
     //User is in the middle of typing a number when the systems receives
     //an "operationPressed" call. Then it sets the text of the display to
     //the value of the operand and then goes on to define the selected operation
@@ -64,12 +68,18 @@
     NSString *operation = [[sender titleLabel] text];
     double result = [[self brain] performOperation:operation];
     [display setText:[NSString stringWithFormat:@"%g", result]];
+    if (self.brain.errorMessage){
+        errorMessageDisplay.text = self.brain.errorMessage;
+    }
     
+    
+    //Various special conditions
     
     if ([operation isEqual:@"C"]) {
         userIsInTheMiddleOfTypingANumber = NO;
         decimalPointAlreadyPressed = NO;
         [memoryOnDisplay setText:@""];
+        errorMessageDisplay.text = @"";
     }
     
     if ([operation isEqual:@"M"] || [operation isEqual:@"M+"]) {

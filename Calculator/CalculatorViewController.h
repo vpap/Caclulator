@@ -16,11 +16,15 @@
     IBOutlet UILabel *display;
     IBOutlet UILabel *memoryOnDisplay;
     IBOutlet UILabel *errorMessageDisplay;
+    NSString *brainError;
     BOOL userIsInTheMiddleOfTypingANumber;
     BOOL decimalPointAlreadyPressed;
     BOOL decimalPointPressed;
     
 }
+
+@property (retain) UILabel *errorMessageDisplay; 
+@property (retain) NSString *brainError;
 
 -(IBAction)digitPressed:(UIButton *)sender;
 -(IBAction)operationPressed:(UIButton *)sender;

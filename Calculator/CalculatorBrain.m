@@ -11,13 +11,13 @@
 @implementation CalculatorBrain
 
 @synthesize valueStoredInMemory;
-@synthesize decimalOperand;
-
--(void)setOperand:(double)anOperand {
-    operand = anOperand;
-}
+@synthesize operand;
+@synthesize waitingOperand;
+@synthesize waitingOperation;
+@synthesize errorMessage;
 
 -(void)performWaitingOperation{
+    errorMessage = @"";
     if ([@"+" isEqual:waitingOperation]) {
         operand = waitingOperand + operand;
     } else if ([@"-" isEqual:waitingOperation]) {
@@ -28,25 +28,25 @@
         if (operand!=0) {
             operand = waitingOperand / operand;
         } else {
-            //Write error message
-//            [memoryOnDisplay setText:@"M"];
+            errorMessage = @"Division by zero";
         }
     } 
 }
 
 -(double)performOperation:(NSString *)operation {
+    errorMessage =@"";
     if ([operation isEqual:@"sqrt"]) {
         if (operand >= 0) {
             operand = sqrt(operand);            
         } else {
-            //Print error message
+            errorMessage = @"Sqrt of negative";
         }
 
     } else if ([operation isEqual:@"1/x"]){
         if (operand != 0){
             operand = 1 / (operand);
         } else {
-            //Print error message
+            errorMessage = @"Division by zero";
         }
     } else if ([operation isEqual:@"sin()"]) {
         operand = sin(operand);
@@ -65,14 +65,12 @@
         } else {
             valueStoredInMemory = waitingOperand;
         }
-        NSLog(@"The value in memory is: %f", valueStoredInMemory);
     } else if ([operation isEqual:@"M+"]) {
         if (operand){
             valueStoredInMemory += operand;
         } else {
             valueStoredInMemory += waitingOperand;
         }
-        NSLog(@"The value in memory is: %f", valueStoredInMemory);
     } else if ([operation isEqual:@"RM"]) {
         operand = valueStoredInMemory;
     } else if ([operation isEqual:@"CM"]){

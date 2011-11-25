@@ -12,19 +12,19 @@
 
 {
     double operand;
-    NSString *operationStatus;
-    float decimalOperand;
     double valueStoredInMemory;
-    NSString *waitingOperation;
     double waitingOperand;
-    NSArray *calculatorMemory;
+    NSString *waitingOperation;
+    NSString *errorMessage;
 }
 
 @property (readwrite) double valueStoredInMemory;
-@property (readwrite) float decimalOperand; 
+@property (readwrite) double operand;
+@property (readwrite) double waitingOperand;
+@property (retain) NSString *waitingOperation;
+@property (retain) NSString *errorMessage;
 
 -(void)performWaitingOperation;
--(void)setOperand:(double)anOperand;
 -(double)performOperation:(NSString *)operation;
 
 @end
